@@ -1,0 +1,14 @@
+# 统一换行符，避免 Windows 提交后整个仓库显示为「全部改动」
+* text=auto eol=lf
+
+# Windows 启动脚本由 scripts/make-launchers.cjs 生成，且 .bat 是 GBK 编码，
+# 不能让 Git 做任何行尾/编码转换
+*.bat -text
+*.vbs -text
+
+# 二进制资源
+*.png binary
+*.jpg binary
+*.ico binary
+*.db binary
+*.exe binary

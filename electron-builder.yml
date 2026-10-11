@@ -1,0 +1,38 @@
+appId: com.local.electric-project-workbench
+productName: 电气项目管理台
+directories:
+  output: release
+  buildResources: build
+# 应用图标（build/icon.ico，含 16~256 多尺寸）
+icon: build/icon.ico
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - package.json
+  # dist/ 与 dist-electron/ 均为 Vite 产物。前端依赖已全部打包进 dist/。
+  # 主进程产物里唯一保留为运行时 require 的 npm 包是 better-sqlite3（原生模块，
+  # 无法打包，且需按 Electron ABI 编译）。因此这里只放行它，其余 node_modules
+  # 一律排除，可把 app.asar 从 150MB+ 降到约 3MB。
+  - '!node_modules/**/*'
+  - 'node_modules/better-sqlite3/**/*'
+  - 'node_modules/bindings/**/*'
+  - 'node_modules/file-uri-to-path/**/*'
+extraResources:
+  - from: docs
+    to: docs
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: dir
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: 电气项目管理台
+asarUnpack:
+  - node_modules/better-sqlite3/**/*
